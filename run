@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+function unit_test() {
+  mvn test
+}
+
+function integration_test() {
+  mvn test -P integration-tests
+}
+
+function local_app() {
+  mvn spring-boot:run -Dspring-boot.run.profiles=demo
+}
+
+function build_docker() {
+  mvn clean
+  mvn install -DskipTests
+  docker build . -f ./Dockerfile -t laboratory-item-store:latest-snapshot
+}
+
+"$@"
